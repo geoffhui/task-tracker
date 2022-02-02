@@ -5,6 +5,7 @@ const AddTask = ({ onAdd }) => {
    const [task, setTask] = useState('')
    const [date, setDate] = useState('')
    const [time, setTime] = useState('')
+   const [period, setPeriod] = useState('AM')
 
    const onSubmit = (e) => {
       e.preventDefault()
@@ -25,13 +26,15 @@ const AddTask = ({ onAdd }) => {
       onAdd({
          id: Math.floor(Math.random() * 10000000),
          text: task,
-         date,
-         time
+         date: date[0].toUpperCase() + date.substring(1),
+         time,
+         period
       })
 
       setTask('')
       setDate('')
       setTime('')
+      setPeriod('AM')
    }
 
    return ( 
@@ -55,7 +58,15 @@ const AddTask = ({ onAdd }) => {
                <label htmlFor='text'>Time</label>
                <input type='text' value={ time }
                onChange={e => setTime(e.target.value)}
-               placeholder="5:30 pm..." />
+               placeholder="5:30" />
+            </div>
+
+            <div className='form-control'>
+               <label htmlFor='text'>Period</label>
+               <select value={ period } onChange={(e) => setPeriod(e.target.value)}>
+                  <option value="AM">AM</option>
+                  <option value="PM">PM</option>
+               </select>
             </div>
 
             <button className='btn btn-block'>Save Task</button>
