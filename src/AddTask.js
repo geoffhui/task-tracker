@@ -11,25 +11,47 @@ const AddTask = ({ onAdd }) => {
       e.preventDefault()
 
       if (!task) {
-         alert('Please add a task')
+         alert('Please add a task.')
          return
       }
       if (!date) {
-         alert('Please add a date')
+         alert('Please add a date.')
          return
       }
       if (!time) {
          alert('Please add a time')
          return
       }
+      if (parseInt(time) < 1 || parseInt(time) > 12) {
+         alert('Time must be between 1 and 12.')
+         return
+      }
 
-      onAdd({
-         id: Math.floor(Math.random() * 10000000),
-         text: task,
-         date: date[0].toUpperCase() + date.substring(1),
-         time,
-         period
-      })
+      if (time.includes(":") === false) {
+         onAdd({
+            id: Math.floor(Math.random() * 10000000),
+            text: task,
+            date: date[0].toUpperCase() + date.substring(1),
+            time: time + ":00",
+            period: period
+         })
+      } else {
+         onAdd({
+            id: Math.floor(Math.random() * 10000000),
+            text: task,
+            date: date[0].toUpperCase() + date.substring(1),
+            time: time,
+            period: period
+         })
+      }
+
+      // onAdd({
+      //    id: Math.floor(Math.random() * 10000000),
+      //    text: task,
+      //    date: date[0].toUpperCase() + date.substring(1),
+      //    time: time,
+      //    period: period
+      // })
 
       setTask('')
       setDate('')
