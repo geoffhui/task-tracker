@@ -29,7 +29,6 @@ const AddTask = ({ onAdd }) => {
 
       if (time.includes(":") === false) {
          onAdd({
-            id: Math.floor(Math.random() * 10000000),
             text: task,
             date: date[0].toUpperCase() + date.substring(1),
             time: time + ":00",
@@ -37,7 +36,6 @@ const AddTask = ({ onAdd }) => {
          })
       } else {
          onAdd({
-            id: Math.floor(Math.random() * 10000000),
             text: task,
             date: date[0].toUpperCase() + date.substring(1),
             time: time,
