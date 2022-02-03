@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 
 const AddTask = ({ onAdd }) => {
@@ -44,14 +44,6 @@ const AddTask = ({ onAdd }) => {
             period: period
          })
       }
-
-      // onAdd({
-      //    id: Math.floor(Math.random() * 10000000),
-      //    text: task,
-      //    date: date[0].toUpperCase() + date.substring(1),
-      //    time: time,
-      //    period: period
-      // })
 
       setTask('')
       setDate('')
