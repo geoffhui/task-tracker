@@ -1,21 +1,24 @@
 import React, { useState } from 'react';
-
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css'
+import moment from 'moment'
 
 const AddTask = ({ onAdd }) => {
    const [task, setTask] = useState('')
-   const [date, setDate] = useState('')
+   const [dateState, setDateState] = useState(new Date())
    const [time, setTime] = useState('')
    const [period, setPeriod] = useState('AM')
+
+   const changeDate = (e) => {
+      setDateState(e)
+      console.log(e)
+   }
 
    const onSubmit = (e) => {
       e.preventDefault()
 
       if (!task) {
          alert('Please add a task.')
-         return
-      }
-      if (!date) {
-         alert('Please add a date.')
          return
       }
       if (!time) {
@@ -30,21 +33,21 @@ const AddTask = ({ onAdd }) => {
       if (time.includes(":") === false) {
          onAdd({
             text: task,
-            date: date[0].toUpperCase() + date.substring(1),
+            date: moment(dateState).format('MMMM Do YYYY'),
             time: time + ":00",
             period: period
          })
       } else {
          onAdd({
             text: task,
-            date: date[0].toUpperCase() + date.substring(1),
+            date: moment(dateState).format('MMMM Do YYYY'),
             time: time,
             period: period
          })
       }
 
       setTask('')
-      setDate('')
+      setDateState(new Date())
       setTime('')
       setPeriod('AM')
    }
@@ -61,9 +64,8 @@ const AddTask = ({ onAdd }) => {
             
             <div className='form-control'>
                <label htmlFor='text'>Date</label>
-               <input type='text' value={ date }
-               onChange={e => setDate(e.target.value)}
-               placeholder="Feb 23..." />
+               <Calendar value={ dateState } onChange={ changeDate } className="react-calendar" />
+               <h3 className='calendar-date'>{moment(dateState).format('MMMM Do YYYY')}</h3>
             </div>
 
             <div className='form-control'>

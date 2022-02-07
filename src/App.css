@@ -75,15 +75,33 @@ body {
    color: #333;
    display: flex;
    justify-content: space-between;
-   position: relative;
    padding: 10px;
    margin: 10px 0;
 }
 
 .list p {
-   position: absolute;
    top: 40px;
-   display: inline-block;
+   display: block;
+}
+
+.list .task-item {
+   width: 80%;
+   display: block;
+   float: left;
+}
+
+.list .task-action {
+   width: 20%;
+   display: block;
+   float: right;
+   text-align: right;
+   position: relative;
+}
+
+.list .task-action .btn {
+   float: right;
+   display: block;
+   background-color: rgb(190, 54, 54);
 }
 
 .task {
@@ -129,4 +147,12 @@ label {
    margin: 5px;
    padding: 3px 7px;
    font-size: 17px;
+}
+
+.calendar-date {
+   margin-top: 20px;
+}
+
+.react-calendar {
+   margin: auto;
 }
