@@ -57,6 +57,9 @@ body {
 .btn:active {
    transform: scale(0.98);
 }
+.btn-hover {
+   cursor: pointer;
+}
 
 .btn-block {
    display: block;
@@ -85,23 +88,30 @@ body {
 }
 
 .list .task-item {
-   width: 80%;
+   width: 60%;
    display: block;
    float: left;
 }
 
 .list .task-action {
-   width: 20%;
+   width: 40%;
    display: block;
    float: right;
    text-align: right;
    position: relative;
 }
 
-.list .task-action .btn {
+.list .task-action .delete-btn {
+   width: 20%;
+   font-size: 125%;
    float: right;
    display: block;
-   background-color: rgb(190, 54, 54);
+   color: rgb(190, 42, 42);
+}
+
+.list .task-action .edit-btn {
+   width: 20%;
+   font-size: 125%;
 }
 
 .task {
@@ -147,6 +157,24 @@ label {
    margin: 5px;
    padding: 3px 7px;
    font-size: 17px;
+}
+
+.form-control .hour-minute {
+   width: 50%
+}
+
+.form-control .hour {
+   width: 40%;
+   display: inline-block;
+}
+
+.form-control .minute {
+   width: 40%;
+   float: right;
+}
+
+.form-control .date-label {
+   text-align: center;
 }
 
 .calendar-date {

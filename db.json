@@ -1,39 +1,24 @@
 {
   "tasks": [
     {
-      "id": "3",
-      "text": "Clean the house",
-      "date": "March 30",
-      "time": "1:45",
-      "period": "PM"
-    },
-    {
-      "text": "Exam",
-      "date": "June 21",
-      "time": "4:30",
-      "period": "PM",
-      "id": "F7yd2IQ"
+      "text": "test",
+      "dateTime": "2022-02-18T17:46",
+      "id": 1
     },
     {
       "text": "Walk the dog",
-      "date": "Feb 6",
-      "time": "9:00",
-      "period": "AM",
-      "id": "WUdvGhn"
+      "dateTime": "2022-02-18T21:09",
+      "id": 2
     },
     {
-      "text": "math test",
-      "date": "February 16th 2022",
-      "time": "7:00",
-      "period": "AM",
-      "id": "vXojsEo"
+      "text": "abc",
+      "dateTime": "2022-01-06T15:00",
+      "id": 3
     },
     {
-      "text": "cnasoicncna soicncnaso icncnasoicnc nasoicn",
-      "date": "February 3rd 2022",
-      "time": "2:00",
-      "period": "AM",
-      "id": "xZGTJn2"
+      "text": "xyz",
+      "dateTime": "2022-03-24T00:00",
+      "id": 4
     }
   ]
 }

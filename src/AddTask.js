@@ -6,8 +6,8 @@ import moment from 'moment'
 const AddTask = ({ onAdd }) => {
    const [task, setTask] = useState('')
    const [dateState, setDateState] = useState(new Date())
-   const [time, setTime] = useState('')
-   const [period, setPeriod] = useState('AM')
+   const [hour, setHour] = useState('00')
+   const [minute, setMinute] = useState('00')
 
    const changeDate = (e) => {
       setDateState(e)
@@ -21,35 +21,54 @@ const AddTask = ({ onAdd }) => {
          alert('Please add a task.')
          return
       }
-      if (!time) {
-         alert('Please add a time')
-         return
-      }
-      if (parseInt(time) < 1 || parseInt(time) > 12) {
-         alert('Time must be between 1 and 12.')
-         return
-      }
 
-      if (time.includes(":") === false) {
-         onAdd({
-            text: task,
-            date: moment(dateState).format('MMMM Do YYYY'),
-            time: time + ":00",
-            period: period
-         })
-      } else {
-         onAdd({
-            text: task,
-            date: moment(dateState).format('MMMM Do YYYY'),
-            time: time,
-            period: period
-         })
-      }
+      var formatDate = moment(dateState).format(`YYYY-MM-DDT${ hour }:${ minute }`)
+
+      onAdd({
+         text: task,
+         dateTime: formatDate
+      })
 
       setTask('')
       setDateState(new Date())
-      setTime('')
-      setPeriod('AM')
+      setHour('00')
+      setMinute('00')
+   }
+
+   function loopHours() {
+      const hourList = [];
+
+         for(var i = 0; i < 24; i++) {
+            var hoursObj = {};
+
+            if (i < 10) {
+               hoursObj['value'] = "0" + i;
+            } else {
+               hoursObj['value'] = i;
+            }
+
+            hourList.push(hoursObj);
+         }
+         
+         return hourList
+   }
+
+   function loopMinutes() {
+      const minuteList = [];
+
+         for(var i = 0; i < 60; i++) {
+            var minutesObj = {};
+
+            if (i < 10) {
+               minutesObj['value'] = "0" + i;
+            } else {
+               minutesObj['value'] = i;
+            }
+
+            minuteList.push(minutesObj);
+         }
+         
+         return minuteList
    }
 
    return ( 
@@ -68,19 +87,21 @@ const AddTask = ({ onAdd }) => {
                <h3 className='calendar-date'>{moment(dateState).format('MMMM Do YYYY')}</h3>
             </div>
 
-            <div className='form-control'>
-               <label htmlFor='text'>Time</label>
-               <input type='text' value={ time }
-               onChange={e => setTime(e.target.value)}
-               placeholder="5:30" />
-            </div>
-
-            <div className='form-control'>
-               <label htmlFor='text'>Period</label>
-               <select value={ period } onChange={(e) => setPeriod(e.target.value)}>
-                  <option value="AM">AM</option>
-                  <option value="PM">PM</option>
-               </select>
+            <div className='form-control hour-minute'>
+               <div className='hour'>
+                  <label htmlFor='text' className='date-label'>Hour
+                     <select value={ hour } onChange={(e) => setHour(e.target.value)}>
+                     {loopHours().map(({ value }) => <option key={value} value={value} >{value}</option>)}
+                     </select>
+                  </label>
+               </div>
+               <div className="minute">
+                  <label htmlFor='text' className='date-label'>Minute
+                     <select value={ minute } onChange={(e) => setMinute(e.target.value)}>
+                     {loopMinutes().map(({ value }) => <option key={value} value={value} >{value}</option>)}
+                     </select>
+                  </label>
+               </div>
             </div>
 
             <button className='btn btn-block'>Save Task</button>

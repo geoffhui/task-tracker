@@ -11,6 +11,9 @@ function App() {
     const res = await fetch('http://localhost:5000/tasks')
     const data = await res.json()
 
+    // sort by ascending order
+    data.sort((a, b) => Date.parse(a.dateTime) - Date.parse(b.dateTime));
+
     return data
   }  
 
