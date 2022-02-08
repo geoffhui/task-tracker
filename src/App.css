@@ -179,6 +179,7 @@ label {
 
 .calendar-date {
    margin-top: 20px;
+   text-align: center;
 }
 
 .react-calendar {

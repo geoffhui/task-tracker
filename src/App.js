@@ -7,6 +7,7 @@ import React, { useState, useEffect } from 'react';
 function App() {
   const [tasks, setTasks] = useState([])
 
+  // GET all tasks from server
   const fetchTasks = async () => {
     const res = await fetch('http://localhost:5000/tasks')
     const data = await res.json()
@@ -24,8 +25,9 @@ function App() {
     }
 
     getTasks()
-  }, [])
+  }, [tasks])
 
+  // DELETE task by id
   const onDelete = async (id) => {
     await fetch(`http://localhost:5000/tasks/${id}`, {
       method: 'DELETE'
@@ -34,6 +36,7 @@ function App() {
     setTasks(tasks.filter((task) => task.id !== id))
   }
 
+  // ADD new task
   const onAdd = async (newTask) => {
     const res = await fetch('http://localhost:5000/tasks', {
       method: 'POST',

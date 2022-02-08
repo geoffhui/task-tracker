@@ -12,8 +12,6 @@ const Tasks = ({ tasks, onDelete }) => {
          </div>
          <div className="task-action">
             <FaTrash className='delete-btn btn-hover' onClick={ () => onDelete(tasks.id) } />
-            {/* <FaTimes onClick={ () => onDelete(tasks.id) } /> */}
-            {/* <button className='btn' onClick={ () => onDelete(tasks.id) }>x</button> */}
             <FaEdit className='edit-btn btn-hover' />
          </div>
       </li>

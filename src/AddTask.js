@@ -11,7 +11,6 @@ const AddTask = ({ onAdd }) => {
 
    const changeDate = (e) => {
       setDateState(e)
-      console.log(e)
    }
 
    const onSubmit = (e) => {
@@ -22,6 +21,7 @@ const AddTask = ({ onAdd }) => {
          return
       }
 
+      // converts into datetime format
       var formatDate = moment(dateState).format(`YYYY-MM-DDT${ hour }:${ minute }`)
 
       onAdd({
@@ -29,12 +29,14 @@ const AddTask = ({ onAdd }) => {
          dateTime: formatDate
       })
 
+      // reset all dates to default values
       setTask('')
       setDateState(new Date())
       setHour('00')
       setMinute('00')
    }
 
+   // creates an array of objects with values from 0 to 23
    function loopHours() {
       const hourList = [];
 
@@ -42,17 +44,16 @@ const AddTask = ({ onAdd }) => {
             var hoursObj = {};
 
             if (i < 10) {
-               hoursObj['value'] = "0" + i;
+               hoursObj['value'] = `0${i}`;
             } else {
                hoursObj['value'] = i;
             }
-
             hourList.push(hoursObj);
          }
-         
          return hourList
    }
 
+   // creates an array of objects with values from 0 to 59
    function loopMinutes() {
       const minuteList = [];
 
@@ -60,14 +61,12 @@ const AddTask = ({ onAdd }) => {
             var minutesObj = {};
 
             if (i < 10) {
-               minutesObj['value'] = "0" + i;
+               minutesObj['value'] = `0${i}`;
             } else {
                minutesObj['value'] = i;
             }
-
             minuteList.push(minutesObj);
          }
-         
          return minuteList
    }
 
@@ -89,11 +88,10 @@ const AddTask = ({ onAdd }) => {
 
             <div className='form-control hour-minute'>
                <div className='hour'>
-                  <label htmlFor='text' className='date-label'>Hour
-                     <select value={ hour } onChange={(e) => setHour(e.target.value)}>
-                     {loopHours().map(({ value }) => <option key={value} value={value} >{value}</option>)}
-                     </select>
-                  </label>
+                  <label htmlFor='text' className='date-label'>Hour</label>
+                  <select value={ hour } onChange={(e) => setHour(e.target.value)}>
+                  {loopHours().map(({ value }) => <option key={value} value={value} >{value}</option>)}
+                  </select>
                </div>
                <div className="minute">
                   <label htmlFor='text' className='date-label'>Minute
