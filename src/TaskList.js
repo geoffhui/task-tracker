@@ -7,7 +7,7 @@ const TaskList = ({ taskListDataSet, onDelete }) => {
          <h3>{ taskListDataSet.length > 0 ? 'Tasks' : 'No Tasks Available' }</h3>
          <ul className="list">
             { taskListDataSet.map(task => (
-               <Tasks key={ task.id } tasks={ task } onDelete={ onDelete }/>
+               <Tasks key={ task.id } tasks={ task } onDelete={ onDelete } />
             )) }
          </ul>
       </div>
