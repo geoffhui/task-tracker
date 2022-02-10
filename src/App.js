@@ -40,9 +40,7 @@ function App() {
   const onAdd = async (newTask) => {
     const res = await fetch('http://localhost:5000/tasks', {
       method: 'POST',
-      headers: {
-        'Content-type': 'application/json'
-      },
+      headers: { 'Content-type': 'application/json' },
       body: JSON.stringify(newTask)
     })
 
@@ -51,11 +49,19 @@ function App() {
     setTasks([...tasks, data])
   }
 
+  const handleEdit = (taskObj) => {
+    tasks.forEach(task => {
+      if (task.id === taskObj.id) {
+        task.text = taskObj.text
+      }
+    })
+  }
+
   return (
     <div className="container">
       <Header />
       <AddTask onAdd={ onAdd } />
-      <TaskList taskListDataSet = { tasks } onDelete={ onDelete }/>
+      <TaskList taskListDataSet = { tasks } onDelete={ onDelete } onAdd={ onAdd } handleEdit={ handleEdit } />
     </div>
   );
 }
