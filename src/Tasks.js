@@ -39,7 +39,13 @@ const Tasks = ({ tasks, onDelete, onUpdate }) => {
             // displays when editView is true
             <>
                <div className="task-item">
-                  <input autoFocus type='text' id='edit-input' value={ editTask } onChange={ e => setEditTask(e.target.value) } />
+                  <input 
+                     autoFocus 
+                     type='text' 
+                     id='edit-input' 
+                     value={ editTask }
+                     onChange={ e => setEditTask(e.target.value) } 
+                  />
                   <p>{ moment(new Date(tasks.dateTime)).format('MMMM Do YYYY') } </p>
                   <p>{ moment(new Date(tasks.dateTime)).format('LT') }</p>
                </div>

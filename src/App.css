@@ -217,3 +217,7 @@ label {
 .react-calendar {
    margin: auto;
 }
+
+.add-task-error {
+   color: red;
+}
