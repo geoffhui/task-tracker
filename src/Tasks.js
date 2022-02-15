@@ -1,29 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import moment from "moment";
 
-const Tasks = ({ tasks, onDelete, onAdd, handleEdit }) => {
+const Tasks = ({ tasks, onDelete, onUpdate }) => {
    const [editView, setEditView] = useState(false)
    const [editTask, setEditTask] = useState(tasks.text)
+   const [taskObj, setTaskObj] = useState(tasks)
 
-   // resets edit view
+   const handleEdit = () => {
+      // Sets edit input to current task
+      setEditTask(tasks.text)
+      setEditView(true)
+   }
+
+   // Resets edit view
    const handleCancel = () => {
       setEditView(false)
-      setEditTask('')
+      setEditTask(tasks.text)
    }
 
-   // BUG - rendering issue (renders after DELETE, and again after ADD)
-   // handle edit
-   const onEdit = (taskObj) => {
-      onDelete(taskObj.id)
-      onAdd({
-         id: taskObj.id,
-         text: editTask,
-         dateTime: taskObj.dateTime
+   const handleUpdate = () => {
+      setTaskObj({
+         'id': tasks.id, 
+         'text': editTask,
+         'dateTime': tasks.dateTime
       })
-
       setEditView(false)
+      onUpdate(taskObj)
    }
+
+   useEffect(() => {
+      onUpdate(taskObj)
+   }, [taskObj])
 
    return ( 
       <li>
@@ -31,13 +39,13 @@ const Tasks = ({ tasks, onDelete, onAdd, handleEdit }) => {
             // displays when editView is true
             <>
                <div className="task-item">
-                  <input type='text' value={ editTask } onChange={ e => setEditTask(e.target.value) } />
+                  <input autoFocus type='text' id='edit-input' value={ editTask } onChange={ e => setEditTask(e.target.value) } />
                   <p>{ moment(new Date(tasks.dateTime)).format('MMMM Do YYYY') } </p>
                   <p>{ moment(new Date(tasks.dateTime)).format('LT') }</p>
                </div>
                <div className="task-action">
-                  <button onClick={ () => onEdit(tasks) }>Update</button>
-                  <button onClick={ () => handleCancel() }>Cancel</button>
+                  <button className='update-btn btn-hover' onClick={ () => handleUpdate() }>Update</button>
+                  <button className='cancel-btn btn-hover' onClick={ () => handleCancel() }>Cancel</button>
                </div>
             </>    
          : 
@@ -50,7 +58,7 @@ const Tasks = ({ tasks, onDelete, onAdd, handleEdit }) => {
                </div>
                <div className="task-action">
                   <FaTrash className='delete-btn btn-hover' onClick={ () => onDelete(tasks.id) } />
-                  <FaEdit className='edit-btn btn-hover' onClick={ () => setEditView(true) } />
+                  <FaEdit className='edit-btn btn-hover' onClick={ () => handleEdit() } />
                </div>
             </>
          } 

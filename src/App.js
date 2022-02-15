@@ -19,12 +19,16 @@ function App() {
   }  
 
   useEffect(() => {
+    let isMounted = true
+
     const getTasks = async () => {
       const tasksFromServer = await fetchTasks()
       setTasks(tasksFromServer)
     }
 
     getTasks()
+
+    return () => { isMounted = false }
   }, [tasks])
 
   // DELETE task by id
@@ -49,19 +53,22 @@ function App() {
     setTasks([...tasks, data])
   }
 
-  const handleEdit = (taskObj) => {
-    tasks.forEach(task => {
-      if (task.id === taskObj.id) {
-        task.text = taskObj.text
-      }
+  // UPDATE task
+  const onUpdate = async (updatedTask) => {
+    const res = await fetch(`http://localhost:5000/tasks/${updatedTask.id}`, {
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(updatedTask)
     })
+
+    const data = await res.json()
   }
 
   return (
     <div className="container">
       <Header />
       <AddTask onAdd={ onAdd } />
-      <TaskList taskListDataSet = { tasks } onDelete={ onDelete } onAdd={ onAdd } handleEdit={ handleEdit } />
+      <TaskList taskListDataSet = { tasks } onDelete={ onDelete } onAdd={ onAdd } onUpdate={ onUpdate } />
     </div>
   );
 }
