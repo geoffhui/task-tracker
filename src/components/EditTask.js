@@ -5,6 +5,7 @@ import moment from 'moment'
 import TaskError from './TaskError'
 import EditHeader from "./EditHeader";
 import { useLocation, useNavigate } from 'react-router-dom';
+import { dbDateFormat, createTimes, dateFormat } from "../assets/Functions";
 
 const EditTask = ({  onUpdate }) => {
    const location = useLocation()
@@ -20,7 +21,6 @@ const EditTask = ({  onUpdate }) => {
       setDateState(e)
    }
 
-   // Update
    const handleUpdate = async () => {
       if (!text) {
          setDisplayTaskError(true)
@@ -30,7 +30,7 @@ const EditTask = ({  onUpdate }) => {
          setTask({
             "id": task.id,
             "text": text,
-            "dateTime":  moment(dateState).format(`YYYY-MM-DDT${ hour }:${ minute }`)
+            "dateTime":  dbDateFormat(dateState, hour, minute)
          })
    
          await onUpdate(task)
@@ -38,47 +38,17 @@ const EditTask = ({  onUpdate }) => {
       }
    }
 
+   const handleCancel = () => {
+      navigate('/')
+   }
+
    useEffect(() => {
       onUpdate(task)
    }, [task])
 
-   // creates an array of objects with values from 0 to 23
-   function loopHours() {
-      const hourList = [];
-
-         for(var i = 0; i < 24; i++) {
-            var hoursObj = {};
-
-            if (i < 10) {
-               hoursObj['value'] = `0${i}`;
-            } else {
-               hoursObj['value'] = i;
-            }
-            hourList.push(hoursObj);
-         }
-         return hourList
-   }
-
-   // creates an array of objects with values from 0 to 59
-   function loopMinutes() {
-      const minuteList = [];
-
-         for(var i = 0; i < 60; i++) {
-            var minutesObj = {};
-
-            if (i < 10) {
-               minutesObj['value'] = `0${i}`;
-            } else {
-               minutesObj['value'] = i;
-            }
-            minuteList.push(minutesObj);
-         }
-         return minuteList
-   }
-
    return ( 
-      <div>
-         <EditHeader />
+      <div className='container edit-form'>
+         <EditHeader className='edit-header'/>
 
          <input 
             autoFocus 
@@ -92,7 +62,7 @@ const EditTask = ({  onUpdate }) => {
             <div className='form-control'>
                <label htmlFor='text'>Date</label>
                <Calendar value={ dateState } onChange={ changeDate } className="react-calendar" />
-               <h3 className='calendar-date'>{moment(dateState).format('MMMM Do YYYY')}</h3>
+               <h3 className='calendar-date'>{dateFormat(dateState, 'MMMM Do YYYY')}</h3>
             </div>
          </div>
 
@@ -102,7 +72,7 @@ const EditTask = ({  onUpdate }) => {
                <select 
                   value={ hour } 
                   onChange={(e) => setHour(e.target.value)}>
-                  {loopHours().map(({ value }) => <option key={ value } value={ value } >{ value }</option>)}
+                  {createTimes(24).map(({ value }) => <option key={ value } value={ value } >{ value }</option>)}
                </select>
             </div>
 
@@ -111,12 +81,17 @@ const EditTask = ({  onUpdate }) => {
                <select 
                   value={ minute } 
                   onChange={(e) => setMinute(e.target.value)}>
-                  {loopMinutes().map(({ value }) => <option key={ value } value={ value } >{ value }</option>)}
+                  {createTimes(60).map(({ value }) => <option key={ value } value={ value } >{ value }</option>)}
                </select>
             </div>
          </div>
 
-         <button className='btn btn-block' onClick={ handleUpdate }>Update Task</button>
+         <h3 className="calendar-date">{ dateFormat((`${dateFormat(dateState, 'YYYY-MM-DD')}T${hour}:${minute}:00`), 'LT') }</h3>
+
+         <div>
+            <button className='btn btn-block update-btn' onClick={ handleUpdate }>Update</button>
+            <button className='btn btn-block cancel-btn' onClick={ handleCancel }>Cancel</button>
+         </div>
       </div>
    );
 }

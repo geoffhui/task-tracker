@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css'
-import moment from 'moment'
 import TaskError from './TaskError'
+import { dbDateFormat, createTimes, dateFormat } from '../assets/Functions'
 
 const AddTask = ({ onAdd }) => {
    const [task, setTask] = useState('')
@@ -23,13 +23,10 @@ const AddTask = ({ onAdd }) => {
          return
       } else {
          setDisplayTaskError(false)
-         
-         // converts into datetime format
-         var formatDate = moment(dateState).format(`YYYY-MM-DDT${ hour }:${ minute }`)
 
          onAdd({
             text: task,
-            dateTime: formatDate
+            dateTime: dbDateFormat(dateState, hour, minute)
          })
 
          // reset all dates to default values
@@ -37,41 +34,7 @@ const AddTask = ({ onAdd }) => {
          setDateState(new Date())
          setHour('00')
          setMinute('00')
-         }
-   }
-
-   // creates an array of objects with values from 0 to 23
-   function loopHours() {
-      const hourList = [];
-
-         for(var i = 0; i < 24; i++) {
-            var hoursObj = {};
-
-            if (i < 10) {
-               hoursObj['value'] = `0${i}`;
-            } else {
-               hoursObj['value'] = i;
-            }
-            hourList.push(hoursObj);
-         }
-         return hourList
-   }
-
-   // creates an array of objects with values from 0 to 59
-   function loopMinutes() {
-      const minuteList = [];
-
-         for(var i = 0; i < 60; i++) {
-            var minutesObj = {};
-
-            if (i < 10) {
-               minutesObj['value'] = `0${i}`;
-            } else {
-               minutesObj['value'] = i;
-            }
-            minuteList.push(minutesObj);
-         }
-         return minuteList
+      }
    }
 
    return ( 
@@ -79,16 +42,18 @@ const AddTask = ({ onAdd }) => {
          <form className='add-form' onSubmit={onSubmit}>
             <div className="form-control">
                <label htmlFor='text'>Task</label>
-               <input type='text' value={ task } 
-               onChange={e => setTask(e.target.value)} 
-               placeholder="Walk the dog..." />
+               <input 
+                  type='text' 
+                  value={ task } 
+                  onChange={e => setTask(e.target.value)} 
+                  placeholder="Walk the dog..." />
                { displayTaskError ? <TaskError /> : null }
             </div>
             
             <div className='form-control'>
                <label htmlFor='text'>Date</label>
                <Calendar value={ dateState } onChange={ changeDate } className="react-calendar" />
-               <h3 className='calendar-date'>{moment(dateState).format('MMMM Do YYYY')}</h3>
+               <h3 className='calendar-date'>{dateFormat(dateState, 'MMMM Do YYYY')}</h3>
             </div>
 
             <div className='form-control hour-minute'>
@@ -98,7 +63,7 @@ const AddTask = ({ onAdd }) => {
                      value={ hour } 
                      onChange={(e) => 
                      setHour(e.target.value)}>
-                     {loopHours().map(({ value }) => <option key={ value } value={ value } >{ value }</option>)}
+                     {createTimes(24).map(({ value }) => <option key={ value } value={ value } >{ value }</option>)}
                   </select>
                </div>
                <div className="minute">
@@ -106,12 +71,14 @@ const AddTask = ({ onAdd }) => {
                   <select 
                      value={ minute } 
                      onChange={(e) => setMinute(e.target.value)}>
-                     {loopMinutes().map(({ value }) => <option key={ value } value={ value } >{ value }</option>)}
+                     {createTimes(60).map(({ value }) => <option key={ value } value={ value } >{ value }</option>)}
                   </select>
                </div>
             </div>
 
-            <button className='btn btn-block'>Save Task</button>
+            <h3 className="calendar-date">{ dateFormat((`${dateFormat(dateState, 'YYYY-MM-DD')}T${hour}:${minute}:00`), 'LT') }</h3>
+
+            <button className='btn btn-block save-btn'>Save Task</button>
          </form>
       </div>
    );

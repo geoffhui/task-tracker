@@ -1,15 +1,15 @@
 import React from "react";
 import { FaEdit, FaTrash } from 'react-icons/fa';
-import moment from "moment";
 import { Link } from 'react-router-dom';
+import { dateFormat } from "../assets/Functions";
 
 const Tasks = ({ tasks, onDelete }) => {
    return ( 
       <li>
          <div className="task-item">
             <h3>{ tasks.text }</h3>
-            <p>{ moment(new Date(tasks.dateTime)).format('MMMM Do YYYY') } </p>
-            <p>{ moment(new Date(tasks.dateTime)).format('LT') }</p>
+            <p>{ dateFormat(tasks.dateTime, 'MMMM Do YYYY') } </p>
+            <p>{ dateFormat(tasks.dateTime, 'LT') }</p>
          </div>
 
          <div className="task-action">

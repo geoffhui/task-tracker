@@ -1,6 +1,6 @@
 import './App.css';
-import Home from './Home'
-import EditTask from './EditTask'
+import Home from './components/Home'
+import EditTask from './components/EditTask'
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
