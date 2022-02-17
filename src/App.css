@@ -237,3 +237,8 @@ label {
    font-size: 17px;
    margin: 5px;
 }
+
+.edit-form .update-successful {
+   color: rgb(114, 167, 35);
+   text-align: center;
+}

@@ -16,6 +16,7 @@ const EditTask = ({  onUpdate }) => {
    const [hour, setHour] = useState(moment(task.dateTime).format('hh'))
    const [minute, setMinute] = useState(moment(task.dateTime).format('mm'))
    const [displayTaskError, setDisplayTaskError] = useState(false)
+   const [success, setSuccess] = useState(false)
 
    const changeDate = (e) => {
       setDateState(e)
@@ -32,9 +33,13 @@ const EditTask = ({  onUpdate }) => {
             "text": text,
             "dateTime":  dbDateFormat(dateState, hour, minute)
          })
-   
+
+         setSuccess(true)
+
          await onUpdate(task)
          navigate("/")
+
+         setSuccess(false)
       }
    }
 
@@ -92,6 +97,8 @@ const EditTask = ({  onUpdate }) => {
             <button className='btn btn-block update-btn' onClick={ handleUpdate }>Update</button>
             <button className='btn btn-block cancel-btn' onClick={ handleCancel }>Cancel</button>
          </div>
+
+         {success ? <p className='update-successful'>Task Updated Successfully</p> : null}
       </div>
    );
 }
