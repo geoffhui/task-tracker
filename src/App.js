@@ -1,8 +1,8 @@
 import './App.css';
-import Header from './Header';
-import AddTask from './AddTask';
-import TaskList from './TaskList';
+import Home from './Home'
+import EditTask from './EditTask'
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
   const [tasks, setTasks] = useState([])
@@ -19,16 +19,12 @@ function App() {
   }  
 
   useEffect(() => {
-    let isMounted = true
-
     const getTasks = async () => {
       const tasksFromServer = await fetchTasks()
       setTasks(tasksFromServer)
     }
 
     getTasks()
-
-    return () => { isMounted = false }
   }, [tasks])
 
   // DELETE task by id
@@ -55,21 +51,22 @@ function App() {
 
   // UPDATE task
   const onUpdate = async (updatedTask) => {
-    const res = await fetch(`http://localhost:5000/tasks/${updatedTask.id}`, {
+    await fetch(`http://localhost:5000/tasks/${updatedTask.id}`, {
       method: 'PUT',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(updatedTask)
     })
-
-    const data = await res.json()
   }
 
   return (
-    <div className="container">
-      <Header />
-      <AddTask onAdd={ onAdd } />
-      <TaskList taskListDataSet = { tasks } onDelete={ onDelete } onAdd={ onAdd } onUpdate={ onUpdate } />
-    </div>
+    <Router>
+      <div>
+        <Routes>
+          <Route exact path="/" element={<Home tasks={ tasks } onAdd={ onAdd } onDelete={ onDelete }  />} />
+          <Route exact path="/edit" element={ <EditTask onUpdate={onUpdate} /> } />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
