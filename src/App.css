@@ -124,6 +124,11 @@ body {
    font-size: 125%;
 }
 
+.list .task-action .complete-btn {
+   font-size: 125%;
+   margin-right: 8px;
+}
+
 .container .update-btn {
    display: inline-block;
    font-size: 16px;
@@ -241,4 +246,8 @@ label {
 .edit-form .update-successful {
    color: rgb(114, 167, 35);
    text-align: center;
+}
+
+.strike-through {
+   text-decoration: line-through;
 }

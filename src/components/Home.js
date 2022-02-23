@@ -4,12 +4,12 @@ import AddTask from './AddTask';
 import TaskList from './TaskList';
 import React from 'react';
 
-const Home = ({ tasks, onAdd, onDelete }) => {
+const Home = ({ tasks, onAdd, onDelete, onUpdate }) => {
    return ( 
       <div className="container">
          <Header />
          <AddTask onAdd={ onAdd } />
-         <TaskList taskListDataSet = { tasks } onDelete={ onDelete } onAdd={ onAdd } />
+         <TaskList tasks={ tasks } onDelete={ onDelete } onUpdate={ onUpdate } />
       </div>
    );
 }

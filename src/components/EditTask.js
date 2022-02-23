@@ -31,7 +31,8 @@ const EditTask = ({  onUpdate }) => {
          setTask({
             "id": task.id,
             "text": text,
-            "dateTime":  dbDateFormat(dateState, hour, minute)
+            "dateTime":  dbDateFormat(dateState, hour, minute),
+            "completed": false
          })
 
          setSuccess(true)
@@ -49,7 +50,7 @@ const EditTask = ({  onUpdate }) => {
 
    useEffect(() => {
       onUpdate(task)
-   }, [task])
+   }, [task, onUpdate])
 
    return ( 
       <div className='container edit-form'>

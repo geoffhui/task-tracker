@@ -26,7 +26,8 @@ const AddTask = ({ onAdd }) => {
 
          onAdd({
             text: task,
-            dateTime: dbDateFormat(dateState, hour, minute)
+            dateTime: dbDateFormat(dateState, hour, minute),
+            completed: false
          })
 
          // reset all dates to default values

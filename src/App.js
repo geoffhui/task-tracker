@@ -62,7 +62,7 @@ function App() {
     <Router>
       <div>
         <Routes>
-          <Route exact path="/" element={<Home tasks={ tasks } onAdd={ onAdd } onDelete={ onDelete }  />} />
+          <Route exact path="/" element={<Home tasks={ tasks } onAdd={ onAdd } onDelete={ onDelete } onUpdate={ onUpdate } />} />
           <Route exact path="/edit" element={ <EditTask onUpdate={onUpdate} /> } />
         </Routes>
       </div>

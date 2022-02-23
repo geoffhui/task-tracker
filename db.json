@@ -3,17 +3,20 @@
     {
       "id": 4,
       "text": "walk the dog",
-      "dateTime": "2022-02-28T12:00"
+      "dateTime": "2022-02-28T12:00",
+      "completed": false
     },
     {
       "id": 3,
       "text": "math exam",
-      "dateTime": "2022-03-28T00:00"
+      "dateTime": "2022-03-28T00:00",
+      "completed": true
     },
     {
       "id": 5,
       "text": "gathering",
-      "dateTime": "2022-06-23T08:30"
+      "dateTime": "2022-06-23T08:30",
+      "completed": false
     }
   ]
 }
