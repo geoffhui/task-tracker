@@ -13,7 +13,7 @@ const EditTask = ({  onUpdate }) => {
    const [task, setTask] = useState(location.state)
    const [text, setText] = useState(task.text)
    const [dateState, setDateState] = useState(new Date(task.dateTime))
-   const [hour, setHour] = useState(moment(task.dateTime).format('hh'))
+   const [hour, setHour] = useState(moment(task.dateTime).format('HH'))
    const [minute, setMinute] = useState(moment(task.dateTime).format('mm'))
    const [displayTaskError, setDisplayTaskError] = useState(false)
    const [success, setSuccess] = useState(false)
