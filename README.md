@@ -1,6 +1,6 @@
 # task-tracker
 A to-do list web application used for keeping track of daily tasks. <br>
-Created using ReactJS with a JSON server for the backend.
+Created using ReactJS and JSON server for its database.
 
 # Screenshots
 Home Page
